@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Mi Calculadora de Multiplicar</title>
+<meta name="description" content="Multiplica dos números fácilmente con Mi Calculadora de Multiplicar. Una herramienta gratuita, sencilla y rápida.">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            box-sizing: border-box;9
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .calculadora {
+            background: white;
+            width: 100%;
+            max-width: 380px;
+            padding: 30px;
+            border-radius: 24px;
+            text-align: center;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .icono {
+            font-size: 50px;
+            margin-bottom: 10px;
+        }
+
+        h1 {
+            color: #4338ca;
+            font-size: 26px;
+            margin: 0 0 10px;
+        }
+
+        .descripcion {
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .campo {
+            text-align: left;
+            margin-bottom: 18px;
+        }
+
+        label {
+            display: block;
+            color: #444;
+            font-size: 14px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        input {
+            width: 100%;
+            padding: 14px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 17px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #6366f1;
+        }
+
+        .multiplicar {
+            width: 100%;
+            padding: 14px;
+            margin-top: 5px;
+            background: #6366f1;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .multiplicar:hover {
+            background: #4338ca;
+            transform: translateY(-2px);
+        }
+
+        .resultado-caja {
+            background: #f0fdf4;
+            border: 2px solid #bbf7d0;
+            border-radius: 15px;
+            padding: 18px 10px;
+            margin-top: 24px;
+        }
+
+        .resultado-titulo {
+            color: #15803d;
+            font-size: 13px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+       /* Resultado decorativo y moderno */
+#resultado {
+    position: relative;
+    margin-top: 25px;
+    padding: 25px 15px;
+    border: 2px solid #c4b5fd;
+    border-radius: 22px;
+    background: linear-gradient(135deg, #faf5ff 0%, #ede9fe 50%, #e0e7ff 100%);
+    color: #5b21b6;
+    font-size: 36px;
+    font-weight: 800;
+    text-align: center;
+    box-shadow:
+        0 8px 20px rgba(109, 40, 217, 0.12),
+        inset 0 1px 5px rgba(255, 255, 255, 0.9);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+/* Título del resultado */
+#resultado::before {
+    content: "✦  TU RESULTADO  ✦";
+    display: block;
+    margin-bottom: 12px;
+    color: #7c3aed;
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 3px;
+}
+
+/* Efecto elegante al pasar el cursor */
+#resultado:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 26px rgba(109, 40, 217, 0.2);
+}
+
+        .limpiar {
+            width: 100%;
+            margin-top: 14px;
+            padding: 13px;
+            background: #1a1b1b;
+            color: #f5eeee;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .limpiar:hover {
+            background: #141414;
+        }
+
+        .pie {
+            margin-top: 22px;
+            color: #999;
+            font-size: 12px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="calculadora">
+
+<div class="icono">
+    <img src="recursos/insigniajob.png" width="100 class="insignia">
+</div>
+        <h1>Mi calculadora de multiplicar</h1>
+
+        <p class="descripcion">
+            Multiplica dos números fácilmente
+        </p>
+
+        <div class="campo">
+            <label for="numero1">Primer número</label>
+            <input type="number" id="numero1"
+                   placeholder="Escribe un número" step="any">
+        </div>
+
+        <div class="campo">
+            <label for="numero2">Segundo número</label>
+            <input type="number" id="numero2"
+                   placeholder="Escribe otro número" step="any">
+        </div>
+
+        <button type="button" class="multiplicar"
+                onclick="multiplicar()">
+            ✖ Multiplicar
+        </button>
+
+        <div class="resultado-caja">
+            <div class="resultado-titulo">Resultado</div>
+            <p id="resultado" aria-live="polite">0</p>
+        </div>
+
+        <button type="button" class="limpiar"
+                onclick="limpiar()">
+            ↻ Limpiar
+        </button>
+
+        <div class="pie">
+            Calculadora de multiplicación
+        </div>
+
+    </div>
+
+    <script>
+        function multiplicar() {
+            const campo1 = document.getElementById("numero1");
+            const campo2 = document.getElementById("numero2");
+            const salida = document.getElementById("resultado");
+
+            if (campo1.value.trim() === "" ||
+                campo2.value.trim() === "") {
+                salida.textContent = "Ingresa ambos números";
+                return;
+            }
+
+            const n1 = Number(campo1.value);
+            const n2 = Number(campo2.value);
+            const total = n1 * n2;
+
+            if (!Number.isFinite(total)) {
+                salida.textContent = "Resultado no válido";
+                return;
+            }
+
+            salida.textContent =
+                Number(total.toPrecision(12)).toString();
+        }
+
+        function limpiar() {
+            document.getElementById("numero1").value = "";
+            document.getElementById("numero2").value = "";
+            document.getElementById("resultado").textContent = "0";
+        }
+    </script>
+
+</body>
+</html>
